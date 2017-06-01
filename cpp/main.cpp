@@ -9,6 +9,41 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
+// Using a class like this also does not work.
+//
+//class MyWidgetAction : public QWidgetAction {
+//public:
+//    MyWidgetAction(QObject *parent);
+//    ~MyWidgetAction();
+//
+//protected:
+//    virtual QWidget *createWidget(QWidget *parent);
+//};
+//
+//MyWidgetAction::MyWidgetAction(QObject* parent)
+// : QWidgetAction(parent) {
+//
+//}
+//
+//MyWidgetAction::~MyWidgetAction() {
+//
+//}
+//QWidget* MyWidgetAction::createWidget(QWidget* parent) {
+//    // item for the popup menu
+//    QWidget* widget = new QWidget(parent);
+//
+//    QHBoxLayout* layout = new QHBoxLayout(parent);
+//
+//    QLabel* label = new QLabel(parent);
+//    layout->addWidget(label);
+//
+//    // maybe this input is not linked to the main application, which has the locale?
+//    QLineEdit* input = new QLineEdit(parent);
+//    input->setPlaceholderText("This fails...");
+//    layout->addWidget(input);
+//    widget->setLayout(layout);
+//    return widget;
+//}
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +57,7 @@ int main(int argc, char *argv[])
     label1->setText("Enter your text");
     // an input field to test (should work)
     QLineEdit* input1 = new QLineEdit();
+    input1->setPlaceholderText("This works...");
 
     // a button
     QPushButton* button1 = new QPushButton();
@@ -41,12 +77,13 @@ int main(int argc, char *argv[])
 
         // maybe this input is not linked to the main application, which has the locale?
         QLineEdit* input = new QLineEdit();
-        input->setPlaceholderText("New tag");
+        input->setPlaceholderText("This fails...");
         layout->addWidget(input);
         widget->setLayout(layout);
 
         QWidgetAction* action = new QWidgetAction(popup);
         action->setDefaultWidget(widget);
+        //QWidgetAction* action = new MyWidgetAction(popup);
 
         submenu->addAction(action);
 
